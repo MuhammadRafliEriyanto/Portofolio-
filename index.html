@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Saya</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#2D3250', secondary: '#424769', accent: '#F6B17A' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #2D3250 0%, #424769 100%);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #F6B17A;
+        }
+
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            background-color: #F6B17A;
+        }
+
+        .certificate-slider {
+            scroll-snap-type: x mandatory;
+        }
+
+        .certificate-card {
+            scroll-snap-align: center;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #F6B17A;
+        }
+
+        .profile-img-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        .profile-img-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(246, 177, 122, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile-img-container:hover::after {
+            opacity: 1;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                transition: 0.5s;
+                z-index: 100;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800">
+    <!-- Header & Navigation -->
+    <header class="fixed w-full top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#home" class="font-['Roboto'] text-2xl text-primary">Portofolio</a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-primary transition-colors">Beranda</a>
+                <a href="#about" class="text-gray-700 hover:text-primary transition-colors">Tentang Saya</a>
+                <a href="#projects" class="text-gray-700 hover:text-primary transition-colors">Proyek</a>
+                <a href="#certificates" class="text-gray-700 hover:text-primary transition-colors">Sertifikat</a>
+                <a href="#contact" class="text-gray-700 hover:text-primary transition-colors">Kontak</a>
+                <a href="#"
+                    class="bg-primary text-white px-5 py-2 !rounded-button hover:bg-opacity-90 transition-colors whitespace-nowrap">Download
+                    CV</a>
+            </div>
+
+            <div class="md:hidden flex items-center">
+                <button id="menu-toggle" class="w-10 h-10 flex items-center justify-center text-gray-700">
+                    <i class="ri-menu-line ri-2x"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="nav-menu" class="nav-menu gradient-bg fixed top-0 right-[-100%] w-[70%] h-screen z-50 p-8 flex flex-col">
+        <div class="flex justify-end mb-8">
+            <button id="menu-close" class="w-10 h-10 flex items-center justify-center text-white">
+                <i class="ri-close-line ri-2x"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-6">
+            <a href="#home" class="text-white hover:text-accent transition-colors text-xl">Beranda</a>
+            <a href="#about" class="text-white hover:text-accent transition-colors text-xl">Tentang Saya</a>
+            <a href="#projects" class="text-white hover:text-accent transition-colors text-xl">Proyek</a>
+            <a href="#certificates" class="text-white hover:text-accent transition-colors text-xl">Sertifikat</a>
+            <a href="#contact" class="text-white hover:text-accent transition-colors text-xl">Kontak</a>
+            <a href="#"
+                class="bg-accent text-primary px-5 py-2 !rounded-button text-center hover:bg-opacity-90 transition-colors whitespace-nowrap mt-4">Download
+                CV</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 md:pt-32 pb-16 md:pb-24">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary">Saya, Muhammad Rafli
+                        Eriyanto</h1>
+                    <p class="text-xl text-gray-600 mb-8">Seorang <span class="text-accent font-semibold">Full Stack
+                            Developer</span> yang berdedikasi untuk menciptakan solusi digital yang inovatif dan
+                        efektif.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#projects"
+                            class="bg-primary text-white px-6 py-3 !rounded-button hover:bg-opacity-90 transition-colors whitespace-nowrap">Lihat
+                            Proyek</a>
+                        <a href="#contact"
+                            class="border-2 border-primary text-primary px-6 py-3 !rounded-button hover:bg-primary hover:text-white transition-colors whitespace-nowrap">Hubungi
+                            Saya</a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <div class="profile-img-container w-64 h-64 md:w-80 md:h-80 border-4 border-accent shadow-xl">
+                        <img src="img/Foto 1.jpg" alt="Foto Profil" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">Tentang Saya</h2>
+
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-2/5">
+                    <img src="img/Foto 2.jpg" alt="Foto Profil" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+
+                <div class="w-full md:w-3/5">
+                    <p class="text-lg text-gray-700 mb-8">
+                        Saya adalah seorang pengembang web full stack dengan pengalaman lebih dari 4 tahun dalam
+                        industri teknologi. Saya memiliki keahlian dalam pengembangan aplikasi web yang responsif,
+                        skalabel, dan berorientasi pada pengguna.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-8">
+                        Latar belakang pendidikan saya di bidang Teknik Informatika dan pengalaman bekerja dengan
+                        berbagai teknologi memungkinkan saya untuk menghadapi tantangan pengembangan dengan pendekatan
+                        yang komprehensif dan inovatif.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-4 text-primary">Keahlian Teknis</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">HTML/CSS</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">JavaScript</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Dart</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Python</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">PHP/Laravel</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">UI/UX Design</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-4 text-primary">Teknologi yang Dikuasai</h3>
+
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-html5-line"></i>
+                            </div>
+                            <span>HTML5</span>
+                        </div>
+
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-css3-line"></i>
+                            </div>
+                            <span>CSS3</span>
+                        </div>
+
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-javascript-line"></i>
+                            </div>
+                            <span>JavaScript</span>
+                        </div>
+
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-reactjs-line"></i>
+                            </div>
+                            <span>Dart</span>
+                        </div>
+
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-nodejs-line"></i>
+                            </div>
+                            <span>Python</span>
+                        </div>
+
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-database-2-line"></i>
+                            </div>
+                            <span>MongoDB</span>
+                        </div>
+
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-database-line"></i>
+                            </div>
+                            <span>MySQL</span>
+                        </div>
+
+                        <div class="bg-white shadow-sm rounded-lg px-4 py-2 flex items-center gap-2">
+                            <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                <i class="ri-git-branch-line"></i>
+                            </div>
+                            <span>Git</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">
+                Proyek Terbaru
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="aspect-w-16 aspect-h-9 overflow-hidden rounded-t-lg">
+                        <img src="img/Laravel.png" alt="Eye Health"
+                            class="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Laravel SPK</h3>
+                        <p class="text-gray-600 mb-4">
+                            Platform rekomendasi chipset laptop menggunakan metode TOPSIS sebagai sistem pendukung keputusan untuk memilih opsi terbaik untuk membantu memilih dengan tepat.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Bootstrap</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Firebase</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">PHP</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">JS</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://www.youtube.com/watch?v=2s0OVLAu2GY"
+                                class="text-primary hover:text-accent transition-colors flex items-center gap-1">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-external-link-line"></i>
+                                </div>
+                                <span>Demo</span>
+                            </a>
+                            <!-- Source code link commented out -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="aspect-w-16 aspect-h-9 overflow-hidden rounded-t-lg">
+                        <img src="img/HIITFY.jpg" alt="Eye Health"
+                            class="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">HIITFY Apps (InProgress)</h3>
+                        <p class="text-gray-600 mb-4">
+                            Aplikasi HIIT dengan deteksi realtime untuk pembakaran kalori optimal. Menyediakan program latihan lengkap dan monitoring progres latihan secara akurat
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Flutter</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Mediapipe</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Firebase</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">MongoDB</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#"
+                                class="text-primary hover:text-accent transition-colors flex items-center gap-1">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-external-link-line"></i>
+                                </div>
+                                <span>Demo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="aspect-w-16 aspect-h-9 overflow-hidden rounded-t-lg">
+                        <img src="img/MobileApp.jpg" alt="Eye Health"
+                            class="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Eye Health Mobile</h3>
+                        <p class="text-gray-600 mb-4">
+                            Aplikasi Eye Health dengan fitur chatbot, artikel dan deteksi penyakit mata lansia dengan deteksi secara realtime dan monitoring,
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Flutter</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">MySQL</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Tensorflow</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">NLP</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://youtu.be/ew7QYhHS68Y?si=gjdy34BL2xz-MYj-"
+                                class="text-primary hover:text-accent transition-colors flex items-center gap-1">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-external-link-line"></i>
+                                </div>
+                                <span>Demo</span>
+                            </a>
+                            <!-- Source code link commented out -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+
+
+                <!-- Project 4 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="aspect-w-16 aspect-h-9 overflow-hidden rounded-t-lg">
+                        <img src="img/EyeHealthWeb.png" alt="Eye Health"
+                            class="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Eye Halth Web</h3>
+                        <p class="text-gray-600 mb-4">
+                             Eye Health hadir dengan fitur chatbot, artikel dan deteksi penyakit mata lansia dengan deteksi secara realtime dan monitoring,
+                        </p>
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Flask</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">TailwindCss</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">MySQL</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">NLP</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://youtu.be/ew7QYhHS68Y?si=gjdy34BL2xz-MYj-"
+                                class="text-primary hover:text-accent transition-colors flex items-center gap-1">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-external-link-line"></i>
+                                </div>
+                                <span>Demo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="text-center mt-12">
+                <a href="#"
+                    class="inline-block bg-primary text-white px-6 py-3 !rounded-button hover:bg-opacity-90 transition-colors whitespace-nowrap">
+                    Lihat Semua Proyek
+                </a>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">Sertifikat</h2>
+
+            <div class="relative">
+                <div class="certificate-slider flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scrollbar-hide">
+
+                    <!-- Certificate 1 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Search and AI CRA.png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Search and AI (CRA)</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2025</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 2 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Search and AI.png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Search and AI</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2025</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 3 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Search and AI (French) .png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Search and AI (French)</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2025</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 4 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Python Progamming Basic.png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Python Progamming Basic</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2025</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 5 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Huawei Datacom Course.png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Huawei Datacom Course</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2024</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 5 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Huawei Computer Network.png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Huawei Computer Network</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2024</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 5 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Huawei Computer Network CRA .png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Huawei Computer Network CRA</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2024</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 5 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Huawei Computer Network.png" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Huawei Computer Network</h3>
+                        <p class="text-gray-600 mb-1">Huawei Talent</p>
+                        <p class="text-gray-500 text-sm mb-4">2024</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 5 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Generative Ai.jpg" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Generative AI</h3>
+                        <p class="text-gray-600 mb-1">DigiTalent</p>
+                        <p class="text-gray-500 text-sm mb-4">2025</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Certificate 5 -->
+                    <div
+                        class="certificate-card min-w-[200px] md:min-w-[200px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 card-hover snap-center">
+                        <img src="img/Data Science.jpg" alt="Sertifikat Full Stack"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Data Science</h3>
+                        <p class="text-gray-600 mb-1">DigiTalent</p>
+                        <p class="text-gray-500 text-sm mb-4">2025</p>
+                        <a href="#" class="text-accent hover:text-primary transition-colors flex items-center gap-1">
+                            <i class="ri-external-link-line w-5 h-5"></i>
+                            <span>Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Navigation Dots -->
+                <div class="flex justify-center mt-6 gap-2" id="certificate-dots">
+                    <button class="w-3 h-3 rounded-full bg-primary" data-index="0"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300" data-index="1"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300" data-index="2"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300" data-index="3"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300" data-index="4"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">Hubungi Saya</h2>
+
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="w-full md:w-1/2">
+                    <form class="bg-white rounded-lg shadow-md p-8">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Nama</label>
+                            <input type="text" id="name"
+                                class="w-full px-4 py-3 border border-gray-300 rounded focus:border-accent focus:outline-none"
+                                placeholder="Masukkan nama Anda">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email"
+                                class="w-full px-4 py-3 border border-gray-300 rounded focus:border-accent focus:outline-none"
+                                placeholder="Masukkan email Anda">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subjek</label>
+                            <input type="text" id="subject"
+                                class="w-full px-4 py-3 border border-gray-300 rounded focus:border-accent focus:outline-none"
+                                placeholder="Masukkan subjek pesan">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Pesan</label>
+                            <textarea id="message" rows="5"
+                                class="w-full px-4 py-3 border border-gray-300 rounded focus:border-accent focus:outline-none resize-none"
+                                placeholder="Tulis pesan Anda di sini..."></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-primary text-white py-3 !rounded-button hover:bg-opacity-90 transition-colors whitespace-nowrap">Kirim
+                            Pesan</button>
+                    </form>
+                </div>
+
+                <div class="w-full md:w-1/2">
+                    <div class="bg-white rounded-lg shadow-md p-8 h-full">
+                        <h3 class="text-2xl font-semibold mb-6 text-primary">Informasi Kontak</h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full flex-shrink-0">
+                                    <div class="w-5 h-5 flex items-center justify-center text-primary">
+                                        <i class="ri-map-pin-line"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">Lokasi</h4>
+                                    <p class="text-gray-600">Tegal, Jawa Tengah, Indonesia</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full flex-shrink-0">
+                                    <div class="w-5 h-5 flex items-center justify-center text-primary">
+                                        <i class="ri-mail-line"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">Email</h4>
+                                    <p class="text-gray-600">raflieriyanto810@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full flex-shrink-0">
+                                    <div class="w-5 h-5 flex items-center justify-center text-primary">
+                                        <i class="ri-phone-line"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">Telepon</h4>
+                                    <p class="text-gray-600">+68 961 8681 0190</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10">
+                            <h4 class="font-medium text-gray-800 mb-4">Media Sosial</h4>
+                            <div class="flex gap-4">
+                                <a href="#"
+                                    class="social-icon w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <div class="w-5 h-5 flex items-center justify-center">
+                                        <i class="ri-linkedin-fill"></i>
+                                    </div>
+                                </a>
+
+                                <a href="https://github.com/MuhammadRafliEriyanto"
+                                    class="social-icon w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <div class="w-5 h-5 flex items-center justify-center">
+                                        <i class="ri-github-fill"></i>
+                                    </div>
+                                </a>
+
+                                <a href="https://instagram.com/_dolph1nsss"
+                                    class="social-icon w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <div class="w-5 h-5 flex items-center justify-center">
+                                        <i class="ri-instagram-fill"></i>
+                                    </div>
+                                </a>
+
+                                <a href="#"
+                                    class="social-icon w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <div class="w-5 h-5 flex items-center justify-center">
+                                        <i class="ri-twitter-x-fill"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <a href="#home" class="font-['Roboto'] text-3xl mb-6 md:mb-0">Portofolio</a>
+
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="#home" class="text-white hover:text-accent transition-colors">Beranda</a>
+                    <a href="#about" class="text-white hover:text-accent transition-colors">Tentang Saya</a>
+                    <a href="#projects" class="text-white hover:text-accent transition-colors">Proyek</a>
+                    <a href="#certificates" class="text-white hover:text-accent transition-colors">Sertifikat</a>
+                    <a href="#contact" class="text-white hover:text-accent transition-colors">Kontak</a>
+                </div>
+            </div>
+
+            <hr class="border-white border-opacity-20 mb-8">
+
+            <div class="text-center text-white text-opacity-80">
+                <p>&copy; Muhammad Rafli Eriyanto | Dolph1nsss</p>
+                <p class="mt-2">Dibuat dengan <span class="text-accent">❤</span> di Jawa Tengah, Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="back-to-top w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center">
+        <div class="w-6 h-6 flex items-center justify-center">
+            <i class="ri-arrow-up-line"></i>
+        </div>
+    </button>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script id="mobile-menu-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const menuClose = document.getElementById('menu-close');
+            const navMenu = document.getElementById('nav-menu');
+            const mobileMenuLinks = navMenu.querySelectorAll('a');
+
+            menuToggle.addEventListener('click', function () {
+                navMenu.classList.add('active');
+            });
+
+            menuClose.addEventListener('click', function () {
+                navMenu.classList.remove('active');
+            });
+
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    navMenu.classList.remove('active');
+                });
+            });
+        });
+    </script>
+
+    <!-- Certificate Slider Script -->
+    <script id="certificate-slider-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const slider = document.getElementById('certificate-slider');
+            const dots = document.querySelectorAll('#certificate-dots button');
+            const cardWidth = 350; // Approximate width of a card including gap
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', function () {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    slider.scrollTo({
+                        left: index * cardWidth,
+                        behavior: 'smooth'
+                    });
+
+                    // Update active dot
+                    dots.forEach(d => d.classList.remove('bg-primary'));
+                    dots.forEach(d => d.classList.add('bg-gray-300'));
+                    this.classList.remove('bg-gray-300');
+                    this.classList.add('bg-primary');
+                });
+            });
+
+            // Update dots on scroll
+            slider.addEventListener('scroll', function () {
+                const scrollPosition = slider.scrollLeft;
+                const index = Math.round(scrollPosition / cardWidth);
+
+                dots.forEach(d => d.classList.remove('bg-primary'));
+                dots.forEach(d => d.classList.add('bg-gray-300'));
+
+                if (dots[index]) {
+                    dots[index].classList.remove('bg-gray-300');
+                    dots[index].classList.add('bg-primary');
+                }
+            });
+        });
+    </script>
+
+    <!-- Back to Top Script -->
+    <script id="back-to-top-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <!-- Form Validation Script -->
+    <script id="form-validation-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const contactForm = document.querySelector('form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+
+            contactForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                let isValid = true;
+
+                // Simple validation
+                if (nameInput.value.trim() === '') {
+                    nameInput.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    nameInput.classList.remove('border-red-500');
+                }
+
+                if (emailInput.value.trim() === '' || !isValidEmail(emailInput.value)) {
+                    emailInput.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    emailInput.classList.remove('border-red-500');
+                }
+
+                if (subjectInput.value.trim() === '') {
+                    subjectInput.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    subjectInput.classList.remove('border-red-500');
+                }
+
+                if (messageInput.value.trim() === '') {
+                    messageInput.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    messageInput.classList.remove('border-red-500');
+                }
+
+                if (isValid) {
+                    // In a real application, you would send the form data to a server here
+                    alert('Pesan berhasil dikirim! Terima kasih telah menghubungi saya.');
+                    contactForm.reset();
+                }
+            });
+
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Clear validation styling on input
+            [nameInput, emailInput, subjectInput, messageInput].forEach(input => {
+                input.addEventListener('input', function () {
+                    this.classList.remove('border-red-500');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
